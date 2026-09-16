@@ -3,6 +3,7 @@ from langgraph.graph import StateGraph, START, END
 from repositories.policy_repository import get_policy
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
+from llm.classifier import classify_question_with_llm
 
 
 load_dotenv()
@@ -36,7 +37,8 @@ def classify_question(state: State):
         return {"intent": "holiday"}
 
     else:
-        return {"intent": "unknown"}
+        intent = classify_question_with_llm(question)
+        return {"intent": intent}
 
 
 
